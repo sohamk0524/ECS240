@@ -1,0 +1,4 @@
+idom 1 
+idom 2 1
+cd 1 
+cd 2 
