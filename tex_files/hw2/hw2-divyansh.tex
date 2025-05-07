@@ -286,9 +286,26 @@
        \begin{mdframed}
         Justification for answer:
 
-        In a program with well-defined types, a pointer with type n can only point to a variable with type n - 1. This means that in the realizability graph, we should only see edges from between nodes that are one level apart. But in the realizability graph above, we can see that there is an edge from x to y, where x and y are at the same level.
+        Suppose we assume that the given realizability graph is of a program with well-defined types.
 
-        Since, the realizability graph is an overapproximation of the points-to relation of the program, we know for a fact that this is not a program with well-defined types.
+        We know that in a realizability graph of a program with well-defined types, you can only have edges from some layer n to layer n - 1. This is because for example, an int** pointer can only point to a int* in a program with well-defined types. As you can see, the level is the number of stars in the type, so we can see that you can only have points-to relation from some level n to level n - 1.
+
+        Since we are assuming the given realizability graph is of a program with well-defined types, and since there is an edge from p1 to x and p1 to y, that implies that p1 is one level above x and y, and that x and y are at the same level.
+
+        Since there is also an edge from p2 to x, we know that p2 is one level above x. And because we know that both p1 and p2 are one level above x, that must mean that p1 and p2 are at the same level as well.
+
+        Since there is an edge from x to a, we know that x is one level above a, and since there is an edge from y to b, we know that y is one level above b. And since we know that x and y are at the same level, that means that a and b are also at the same level.
+
+        So we have established that p1, p2 are at the same level, x and y are at the same level, and a and b are at the same level in the realizability graph assuming that this realizability graph is of a program with well-defined types.
+
+        However, we see that there is an edge from x to y, which isn't allowed in a realizability graph for a program with well-defined types, since the edges should go to nodes that are a level below the current node. But since that property is violated in the given realizability graph, we have a contradiction because we assumed that our realizability graph was for a program with well-defined types.
+
+        Therefore, we know that this realizability graph is not for a program with well-defined types.
+
+        And since the realizability graph is an overapproximation of the points-to relations of the underlying program, we know that if the realizability graph is not for a program with well-defined types, then the underlying program also doesn't have well-defined types.
+
+        Therefore, we can conclude that the underlying Program P is definitely NOT a program with well-defined types.
+
        \end{mdframed}
     
 
