@@ -199,12 +199,41 @@
       corresponding to $P$ and $OneStar(P)$.
       
       \begin{mdframed}
-        \vspace{2em}
+        %\vspace{2em}
         %% TODO
         %% Program P
+        \textbf{Program P}
+        \begin{lstlisting}
+          a1 = &a2;
+          b1 = &b2;
+          a = &a1;
+          b = &b1;
+          p = &a;
+          p = &b;
+          *p = **p;
+        \end{lstlisting}
         %% Points-to relations for P using flow-insensitive analysis
+        \textbf{Points-to relations for P Precise Flow-Insenstive Analysis}
+
+        $\{\langle a1, a2 \rangle\, \langle b1, b2 \rangle\, \langle a, a1 \rangle, \langle b, b1 \rangle, \langle p, a \rangle, \langle p, b \rangle, \langle a, a2 \rangle, \langle b, b2 \rangle \}$
         %% Program OneStar(P)
+
+        \textbf{Program OneStar(P)}
+        \begin{lstlisting}
+          a1 = &a2;
+          b1 = &b2;
+          a = &a1;
+          b = &b1;
+          p = &a;
+          p = &b;
+          t1 = *p;
+          t2 = *t1;
+          *p = t2;
+        \end{lstlisting}
         %% Points-to relations for OneStar(P) using flow-insensitive analysis
+        
+        \textbf{Points-to relations for OneStar(P) Precise Flow-Insensitive Analysis}
+        $\{\langle a1, a2 \rangle\, \langle b1, b2 \rangle\, \langle a, a1 \rangle, \langle b, b1 \rangle, \langle p, a \rangle, \langle p, b \rangle, \langle a, a2 \rangle, \langle b, b2 \rangle, \langle a, b2 \rangle, \langle b, a2 \rangle \}$
       \end{mdframed}
 
       \item (5 points) Recall that a \emph{program with well-defined types}
@@ -259,7 +288,7 @@
 
         In a program with well-defined types, a pointer with type n can only point to a variable with type n - 1. This means that in the realizability graph, we should only see edges from between nodes that are one level apart. But in the realizability graph above, we can see that there is an edge from x to y, where x and y are at the same level.
 
-        Therefore, we know for a fact that this is not a program with well-defined types.
+        Since, the realizability graph is an overapproximation of the points-to relation of the program, we know for a fact that this is not a program with well-defined types.
        \end{mdframed}
     
 
