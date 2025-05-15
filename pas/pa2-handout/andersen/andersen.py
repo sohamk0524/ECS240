@@ -35,6 +35,7 @@ def refactor_into_temp_vars(dleft, var_left, dright, var_right, temp_counter, ne
     else:
         new_statements.append((dleft, var_left, dright, var_right))
 
+
 # Function to parse through raw input and return list of statement refactored into Andersen compatible format
 def transform_input(in_file):
     with open(in_file, "r") as input:
@@ -69,7 +70,83 @@ def transform_input(in_file):
             new_statements.append((dleft, var_left, dright, var_right))
 
     return num_vars, temp_counter, new_statements
+
+# Function to assign statements to constraints based on their form
+def assign_constraints(statements):
+    address_con = []
+    copy_con = []
+    load_con= []
+    store_con= []
+
+    for statement in statements:
+        dleft = statement[0]
+        var_left = statement[1]
+        dright = statement[2]
+        var_right = statement[3]
+        if dleft == 0 and dright == -1:
+            address_con.append((var_left, var_right))
+        elif dleft == 0 and dright == 0:
+            copy_con.append((var_left, var_right))
+        elif dleft == 1 and dright == 0:
+            store_con.append((var_left, var_right))
+        elif dleft == 0 and dright == 1:
+            load_con.append((var_left, var_right))
+        else:
+            print("Invalid statment")
     
+    return address_con, copy_con, load_con, store_con
+
+def make_points_to_sets(constraints, total_vars):
+    addr_of = constraints[0]
+    copy = constraints[1]
+    load = constraints[2]
+    store = constraints[3]
+
+    pts_to = {}
+    changed = True 
+    
+
+    for i in range(1,total_vars[0]):
+        pts_to[i] = set()
+
+    for const in addr_of: # 1 = &2
+        pts_to[const[0]].add(const[1])
+
+    while changed:
+        changed = False
+        for const in copy: # 1 = 2
+            pointer = const[0]
+            points_to = const[1]
+            for pts_to_val in pts_to[points_to]:
+                if pts_to_val not in pts_to[pointer]:
+                    changed = True
+                    pts_to[pointer].add(pts_to_val)
+
+        for const in store: # *1 = 2
+            pointer = const[0]
+            points_to = const[1]
+            what_pointer_points_to = pts_to[pointer]
+
+            for a in what_pointer_points_to:
+                for pts_to_val in pts_to[points_to]:
+                    if pts_to_val not in pts_to[a]:
+                        changed = True
+                        pts_to[a].add(pts_to_val)
+        
+        for const in load: # 1 = *2
+            pointer = const[0]
+            points_to = const[1]
+
+            for a in set(pts_to[points_to]):
+                for b in pts_to[a]: # a → b
+                    if b not in pts_to[pointer]:
+                        changed = True
+                        pts_to[pointer].add(b) # x → b
+
+
+    return pts_to
+
+
 def main():
     if len(sys.argv) != 3:
         print("Wrong arguments")
@@ -79,10 +156,20 @@ def main():
     output_path = sys.argv[2]
     num_vars, total_vars, statements = transform_input(input_path)
 
-    
-    print(statements)
-    print(num_vars)
-    print(total_vars)
+    #function to store the statements into different constraints
+    addr_of, copy, load, store = assign_constraints(statements)
+    all_constraints = [addr_of, copy, load, store]
+
+    #function to assign points to sets
+    pts_to = make_points_to_sets(all_constraints, total_vars)
+
+    #print(statements)
+    print(f"address constraints: {addr_of}")
+    print(f"copy constraints: {copy}")
+    print(f"load constraints: {load}")
+    print(f"store constraints: {store}")
+    # print(all_constraints)
+    print(pts_to)   
 
 if __name__ == "__main__":
     main()
