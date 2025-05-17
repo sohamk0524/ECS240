@@ -146,6 +146,16 @@ def make_points_to_sets(constraints, total_vars):
 
     return pts_to
 
+def format_output(pts_to_set, num_vars, output_file):
+    with open(output_file, "w") as out:
+        for i in range(num_vars):
+            pointer = i+1
+            pts_to_list = list(pts_to_set[pointer])
+            for j in range(len(pts_to_list)):
+                output_str = f"pt {pointer} {pts_to_list[j]}\n"
+                out.write(output_str)
+
+
 
 def main():
     if len(sys.argv) != 3:
@@ -163,13 +173,15 @@ def main():
     #function to assign points to sets
     pts_to = make_points_to_sets(all_constraints, total_vars)
 
+    format_output(pts_to, num_vars, output_path)
+
     #print(statements)
-    print(f"address constraints: {addr_of}")
-    print(f"copy constraints: {copy}")
-    print(f"load constraints: {load}")
-    print(f"store constraints: {store}")
+    # print(f"address constraints: {addr_of}")
+    # print(f"copy constraints: {copy}")
+    # print(f"load constraints: {load}")
+    # print(f"store constraints: {store}")
     # print(all_constraints)
-    print(pts_to)   
+    # print(pts_to)
 
 if __name__ == "__main__":
     main()
