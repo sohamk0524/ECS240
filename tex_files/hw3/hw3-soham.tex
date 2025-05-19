@@ -103,9 +103,9 @@
       Team members:
       \begin{itemize}
         %TODO
-        \item Name, email address % Enter name and email address of first team member.
-        \item Name, email address % Comment out this line if working individually.
-        \item Name, email address % Comment out this line if working in pairs.
+        \item Soham Kolhatkar, sakolhatkar@ucdavis.edu % Enter name and email address of first team member.
+        \item Divyansh Rajesh Jain, drajeshjain@ucdavis.edu % Comment out this line if working individually.
+
       \end{itemize}
     \end{mdframed}
 
@@ -156,10 +156,31 @@
       If \textbf{True}, justify your answer.
       If \textbf{False}, provide an example of the CFG $G_l$ where the replacement is incorrect.
       \begin{mdframed}
-      \vspace{3em}
+      %\vspace{3em}
       %% TODO Comment out the correct answer.
       %\textbf{True} % Provide justification.
-      %\textbf{False} % Provide counter example.
+      \textbf{False} % Provide counter example.
+
+      \begin{tikzpicture}[node distance=1.5cm and 2cm, every node/.style={draw, minimum width=2.5cm, align=center}]
+
+        % Nodes
+        \node (B10) {$B_{10}$\\ \texttt{a = 2}};
+        \node (B9) [below=of B10] {$B_9$\\ $d_1$: \texttt{x = 5}};
+        \node (B7) [below left=of B9, xshift=-1cm] {$B_7$\\ $d_2$: \texttt{x = 7}};
+        \node (B6) [below right=of B9, xshift=1cm] {$B_6$\\ \texttt{a = 3}};
+        \node (B5) [below=of B9, yshift=-1.5cm] {$B_5$\\ \texttt{y = x}};
+        
+        % Edges
+        \draw[->] (B10) -- (B9);
+        \draw[->] (B9) -- (B7);
+        \draw[->] (B9) -- (B6);
+        \draw[->] (B7) -- (B5);
+        \draw[->] (B6) -- (B5);
+        
+        \end{tikzpicture}
+
+        Through the partial CFG $G_l$ above we can see an example where all the conditions above are satisfied, but we cannot replace $x$ with 5. The issue is that even though $B_9$ dominates $B_5$, and definition $d_1$ reaches  $IN[B_5]$, this only means that \textbf{there exists SOME path where x = 5 reaches $B_5$}. This does not mean all paths from $B_9$ to $B_5$ will preserve the value of $x$. In the graph above, if we take the path where we go throught $B_7$, we see that x gets modified, therefore in $B_5$ we cannot replace $x$ with 5.
+        
       \end{mdframed}
         
       
@@ -197,15 +218,41 @@
       Define the dataflow analysis that detects such \emph{Useful} variables.
 
       \begin{mdframed}
-        Direction $D =$  % forward or backward
+        Direction $D =$  Backward
+        
 
-        Dataflow values $V = $  %TODO
+        Dataflow values $V =  $ \[
+        \left\{
+        \emptyset, 
+        \{i\}, 
+        \{j\}, 
+        \{\text{sum}\}, 
+        \{i, j\}, 
+        \{i, \text{sum}\}, 
+        \{j, \text{sum}\}, 
+        \{i, j, \text{sum}\}
+        \right\}
+        \]
 
-        Meet operation $\wedge = $ %TODO
+        Meet operation $\wedge =$ Union
 
-        Transfer functions $\mathcal{F}$ for each statement type including boundary conditions:  % TODO
+        Transfer functions $\mathcal{F}$ for each statement type including boundary conditions:  
+             
+        \[
+        \mathcal{F}_{x = expr}(OUT) =
+          \begin{cases}
+            (OUT - \{x\}) \cup USE(expr), & \text{if } x \in OUT \\
+            OUT, & \text{otherwise}
+          \end{cases}
+        \]
+        
+        \[
+        \mathcal{F}_{\text{call}(args)}(OUT) = OUT \cup USE(args)
+        \]
 
-      \end{mdframed}
+        Boundary condition - $IN[EXIT] = \emptyset$   
+
+      \end{mdframed}        
       
       \clearpage
       \item (10 points)
@@ -239,11 +286,19 @@
       Define the dataflow analysis for Source-Flow analysis.
 
       \begin{mdframed}
-        Direction $D =$  % forward or backward %TODO
+        Direction $D =$  forward
 
-        Dataflow values $V = $  %TODO
+        Dataflow values $V = $ 
+   \begin{multline*}
+    \{
+    \emptyset, \{x\}, \{y\}, \{z\}, \{a\}, 
+    \{x,y\}, \{x,z\}, \{x,a\}, \{y,z\}, \{y,a\}, \{z,a\}, \\
+    \{x,y,z\}, \{x,y,a\}, \{x,z,a\}, \{y,z,a\}, 
+    \{x,y,z,a\}
+    \}
+    \end{multline*}
 
-        Meet operation $\wedge = $ %TODO
+        Meet operation $\wedge = $ Union
 
         Family of transfer functions $\mathcal{F}$ for each statement type
         including boundary conditions:  % TODO
