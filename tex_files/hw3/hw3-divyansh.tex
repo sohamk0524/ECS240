@@ -103,9 +103,8 @@
       Team members:
       \begin{itemize}
         %TODO
-        \item Name, email address % Enter name and email address of first team member.
-        \item Name, email address % Comment out this line if working individually.
-        \item Name, email address % Comment out this line if working in pairs.
+        \item Divyansh Rajesh Jain, drajeshjain@ucdavis.edu % Enter name and email address of first team member.
+        \item Soham Kolhatkar, sakolhatkar@ucdavis.edu % Comment out this line if working individually.
       \end{itemize}
     \end{mdframed}
 
@@ -159,7 +158,37 @@
       \vspace{3em}
       %% TODO Comment out the correct answer.
       %\textbf{True} % Provide justification.
-      %\textbf{False} % Provide counter example.
+      \textbf{False} % Provide counter example.
+
+      \begin{tikzpicture}[auto, node distance=1.6cm and 1.8cm]
+        \tikzstyle{every node} = [draw, align=left, minimum width=3cm]
+
+        \node (1) {$B_1$\\ \lstinline$d2: x1 = 1$ };
+        \node [below of=1] (2) {$B_2$\\ \lstinline$d3: x2 = 1$ };
+        \node [below of=2] (3) {$B_3$\\ \lstinline$d4: x3 = 1$ };
+        \node [below of=3] (4) {$B_4$\\ \lstinline$d5: x4 = 1$ };
+        \node [below of=4] (8) {$B_8$\\ \lstinline$d6: x5 = 1$ };
+        \node [below of=8] (9) {$B_9$\\ \lstinline$d1: x = 5$ };
+
+        \node [below left=0.8cm and 1.4cm of 9] (6) {$B_6$\\ \lstinline$d7: x = 3$ };
+        \node [below right=0.8cm and 1.4cm of 9] (7) {$B_7$\\ \lstinline$d8: x7 = 1$ };
+
+        \node [below=2.2cm of 9] (5) {$B_5$\\ \lstinline$y = x$ };
+        \node [below=1.5cm of 5] (10) {$B_{10}$\\ \lstinline$d9: x10 = 1$ };
+
+        % Edges
+        \path (1) edge[cfgedge] (2);
+        \path (2) edge[cfgedge] (3);
+        \path (3) edge[cfgedge] (4);
+        \path (4) edge[cfgedge] (8);
+        \path (8) edge[cfgedge] (9);
+        \path (9) edge[cfgedge] (6);
+        \path (9) edge[cfgedge] (7);
+        \path (6) edge[cfgedge, bend right=15] (5);
+        \path (7) edge[cfgedge, bend left=15] (5);
+        \path (5) edge[cfgedge] (10);
+
+      \end{tikzpicture}
       \end{mdframed}
         
       
@@ -239,14 +268,56 @@
       Define the dataflow analysis for Source-Flow analysis.
 
       \begin{mdframed}
-        Direction $D =$  % forward or backward %TODO
+        Direction $D = $ forward
 
-        Dataflow values $V = $  %TODO
+        Dataflow values $V = $ set of variables
 
-        Meet operation $\wedge = $ %TODO
+        Meet operation $\wedge = \cup $
 
         Family of transfer functions $\mathcal{F}$ for each statement type
-        including boundary conditions:  % TODO
+        including boundary conditions:
+
+        Let S be the input set of dataflow values into the per-statement transfer function
+
+        The following are the transfer functions for each statement type:
+
+\begin{itemize}
+
+    \item \textbf{Type 1:} \texttt{x = c}, where $x$ is a variable and $c$ is a constant.
+    \[
+        \mathcal{F}_{x = c}(S) = S \setminus \{x\}
+    \]
+
+    \item \textbf{Type 2:} \texttt{x = y}, where $x$ and $y$ are variables.
+    \[
+        \mathcal{F}_{x = y}(S) =
+        \begin{cases}
+            S \cup \{x\}, & \text{if } y \in S \\
+            S \setminus \{x\}, & \text{otherwise}
+        \end{cases}
+    \]
+
+    \item \textbf{Type 3:} \texttt{x = y $\oplus$ z}, where $x, y, z$ are variables and $\oplus \in \{+, -, *\}$.
+    \[
+        \mathcal{F}_{x = y \oplus z}(S) = S \setminus \{x\}
+    \]
+
+    \item \textbf{Type 4:} \texttt{x = source()}.
+    \[
+        \mathcal{F}_{x = \text{source}()}(S) = S \cup \{x\}
+    \]
+
+    \item \textbf{Type 5:} \texttt{f(\{y\})}, where $\{y\}$ is a list of variables.
+    \[
+        \mathcal{F}_{f(\{y\})}(S) = S
+    \]
+
+    \item \textbf{Type 6:} \texttt{x = f(\{y\})}, where $x$ is a variable and $\{y\}$ is a list of variables.
+    \[
+        \mathcal{F}_{x = f(\{y\})}(S) = S \setminus \{x\}
+    \]
+
+\end{itemize}
 
       \end{mdframed}
 
