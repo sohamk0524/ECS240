@@ -155,10 +155,7 @@
       If \textbf{True}, justify your answer.
       If \textbf{False}, provide an example of the CFG $G_l$ where the replacement is incorrect.
       \begin{mdframed}
-      \vspace{3em}
-      %% TODO Comment out the correct answer.
-      %\textbf{True} % Provide justification.
-      \textbf{False} % Provide counter example.
+      \textbf{False} 
 
       \begin{tikzpicture}[auto, node distance=1.6cm and 1.8cm]
         \tikzstyle{every node} = [draw, align=left, minimum width=3cm]
@@ -281,43 +278,46 @@
 
         The following are the transfer functions for each statement type:
 
-\begin{itemize}
+        \begin{itemize}
 
-    \item \textbf{Type 1:} \texttt{x = c}, where $x$ is a variable and $c$ is a constant.
-    \[
-        \mathcal{F}_{x = c}(S) = S \setminus \{x\}
-    \]
+            \item \textbf{Type 1:} \texttt{x = c}, where $x$ is a variable and $c$ is a constant.
+            \[
+                \mathcal{F}_{x = c}(S) = S \setminus \{x\}
+            \]
 
-    \item \textbf{Type 2:} \texttt{x = y}, where $x$ and $y$ are variables.
-    \[
-        \mathcal{F}_{x = y}(S) =
-        \begin{cases}
-            S \cup \{x\}, & \text{if } y \in S \\
-            S \setminus \{x\}, & \text{otherwise}
-        \end{cases}
-    \]
+            \item \textbf{Type 2:} \texttt{x = y}, where $x$ and $y$ are variables.
+            \[
+                \mathcal{F}_{x = y}(S) =
+                \begin{cases}
+                    S \cup \{x\}, & \text{if } y \in S \\
+                    S \setminus \{x\}, & \text{otherwise}
+                \end{cases}
+            \]
 
-    \item \textbf{Type 3:} \texttt{x = y $\oplus$ z}, where $x, y, z$ are variables and $\oplus \in \{+, -, *\}$.
-    \[
-        \mathcal{F}_{x = y \oplus z}(S) = S \setminus \{x\}
-    \]
+            \item \textbf{Type 3:} \texttt{x = y $\oplus$ z}, where $x, y, z$ are variables and $\oplus \in \{+, -, *\}$.
+            \[
+                \mathcal{F}_{x = y \oplus z}(S) = S \setminus \{x\}
+            \]
 
-    \item \textbf{Type 4:} \texttt{x = source()}.
-    \[
-        \mathcal{F}_{x = \text{source}()}(S) = S \cup \{x\}
-    \]
+            \item \textbf{Type 4:} \texttt{x = source()}.
+            \[
+                \mathcal{F}_{x = \text{source}()}(S) = S \cup \{x\}
+            \]
 
-    \item \textbf{Type 5:} \texttt{f(\{y\})}, where $\{y\}$ is a list of variables.
-    \[
-        \mathcal{F}_{f(\{y\})}(S) = S
-    \]
+            \item \textbf{Type 5:} \texttt{f(\{y\})}, where $\{y\}$ is a list of variables.
+            \[
+                \mathcal{F}_{f(\{y\})}(S) = S
+            \]
 
-    \item \textbf{Type 6:} \texttt{x = f(\{y\})}, where $x$ is a variable and $\{y\}$ is a list of variables.
-    \[
-        \mathcal{F}_{x = f(\{y\})}(S) = S \setminus \{x\}
-    \]
+            \item \textbf{Type 6:} \texttt{x = f(\{y\})}, where $x$ is a variable and $\{y\}$ is a list of variables.
+            \[
+                \mathcal{F}_{x = f(\{y\})}(S) = S \setminus \{x\}
+            \]
 
-\end{itemize}
+
+        \end{itemize}
+    
+        Boundary Condition: $OUT[ENTRY] = \emptyset$
 
       \end{mdframed}
 
