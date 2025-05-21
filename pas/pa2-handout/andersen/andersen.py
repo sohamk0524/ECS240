@@ -46,6 +46,9 @@ def transform_input(in_file):
     #Extract the number of variables and the statements in the input
     for i in range(len(lines)):
         cur_line = lines[i].strip()
+        if cur_line == "":
+            continue
+
         if cur_line[0] == "c":
             continue
         elif cur_line[0] == "p":
@@ -133,6 +136,11 @@ def make_points_to_sets(constraints, total_vars):
                         changed = True
                         pts_to[a].add(pts_to_val)
         
+
+        # For x = *y:
+        # For each a ∈ pts(y):        (a is some location y might point to)
+        #     For each b ∈ pts(a):    (b is what a might point to)
+        #         Add b to pts(x)
         for const in load: # 1 = *2
             pointer = const[0]
             points_to = const[1]
@@ -175,13 +183,14 @@ def main():
 
     format_output(pts_to, num_vars, output_path)
 
-    #print(statements)
-    # print(f"address constraints: {addr_of}")
-    # print(f"copy constraints: {copy}")
-    # print(f"load constraints: {load}")
-    # print(f"store constraints: {store}")
-    # print(all_constraints)
-    # print(pts_to)
+    print(statements)
+    print(f"num vars: {num_vars}, temps : {total_vars}")
+    print(f"address constraints: {addr_of}")
+    print(f"copy constraints: {copy}")
+    print(f"load constraints: {load}")
+    print(f"store constraints: {store}")
+    print(all_constraints)
+    print(pts_to)
 
 if __name__ == "__main__":
     main()
