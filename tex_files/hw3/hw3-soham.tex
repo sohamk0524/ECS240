@@ -109,6 +109,7 @@
       \end{itemize}
     \end{mdframed}
 
+    \clearpage
     \begin{enumerate}
 
 
@@ -121,8 +122,56 @@
         \end{itemize}
 
         \begin{mdframed}
-          \vspace{2em}
-          % TODO
+          %\vspace{2em}
+
+           We can prove that the two definitions of monotonicity are equivalent by contradiction.
+            
+            Assume, for contradiction, that the two definitions are \textbf{not} equivalent in a dataflow analysis framework $(D, V, \wedge, F)$:
+            
+            \begin{itemize}
+              \item[\textbf{(1)}] For all $x, y \in V$ and $f \in F$, if $x \leq y$, then $f(x) \leq f(y)$.
+              \item[\textbf{(2)}] For all $x, y \in V$ and $f \in F$, $f(x \wedge y) \leq f(x) \wedge f(y)$.
+            \end{itemize}
+            
+            Assume that definition (1) holds for all $f \in F$, but definition (2) fails for some $f \in F$ and some $x, y \in V$.
+            
+            Since $(V, \wedge)$ forms a semilattice, the partial order $\leq$ is defined by:
+            \[
+            x \leq y \iff x \wedge y = x
+            \]
+            We know that in a semilattice $x \wedge y$ represents the \textbf{greatest lower bound} of $x$ and $y$.
+
+            Thus by the defintion of GLB we are able to say: 
+            \[
+            x \wedge y \leq x \quad \text{and} \quad x \wedge y \leq y
+            \]
+
+
+            \vspace{0.5em}
+
+            Now, since $f$ is monotonic by assumption (definition 1), we can apply $f$ to both inequalities:
+            \[
+            f(x \wedge y) \leq f(x), \quad f(x \wedge y) \leq f(y)
+            \]
+
+            \vspace{0.5em}
+            
+            As stated above, the GLB of a semilattice for $x$ and $y$ is $x \wedge y$, we know that the GLB for $f(x)$ and $f(y)$ is $ f(x) \wedge f(y)$. Therefore, by the definition of the meet ($\wedge$), we conclude:
+
+            \vspace{0.5em}
+            
+            \[
+            f(x \wedge y) \leq f(x) \wedge f(y)
+            \]
+            
+                        \vspace{0.5em}
+                        
+            where $f( x \wedge y)$ is some $z \leq GLB$
+            which is exactly definition (2), contradicting our assumption that (2) fails.
+            
+            Hence, definitions (1) and (2) must be equivalent.
+            
+          
         \end{mdframed}
 
         \item  (5 point) $G_l$ is a CFG containing 10 basic blocks. \\We know nothing
@@ -183,6 +232,7 @@
         
       \end{mdframed}
         
+      %\vspace{10em}
       
       \clearpage
       \item (10 points) A variable $x$ is said to be \emph{Useful} at a program point $p$ 
@@ -234,23 +284,46 @@
         \right\}
         \]
 
-        Meet operation $\wedge =$ Union
+        Meet operation $\wedge =$ Union $\cup$
 
         Transfer functions $\mathcal{F}$ for each statement type including boundary conditions:  
-             
+
+        \textbf{Type 1: \textit{var = constant}}
         \[
-        \mathcal{F}_{x = expr}(OUT) =
+            \mathcal{F}_{x=const}(OUT)= OUT \setminus \{x\}
+        \]
+
+        \textbf{Type 2: \textit{var = var}}
+        \[
+        \mathcal{F}_{x = y}(OUT) =
           \begin{cases}
-            (OUT - \{x\}) \cup USE(expr), & \text{if } x \in OUT \\
+            OUT\cup USE(y), & \text{if } x \in OUT \\
             OUT, & \text{otherwise}
           \end{cases}
         \]
-        
+
+
+        \textbf{Type 3: \textit{call(args)}}
         \[
         \mathcal{F}_{\text{call}(args)}(OUT) = OUT \cup USE(args)
         \]
 
-        Boundary condition - $IN[EXIT] = \emptyset$   
+        \textbf{Type 4: \textit{ var = call(args)}}
+        \[
+        \mathcal{F}_{\text{call}(args)}(OUT) = OUT \cup USE(args)
+        \]
+
+        \textbf{Type 5: \textit{ var = var $\oplus$ var }where $\oplus$ is either +, -, * }
+
+         \[
+        \mathcal{F}_{x = y \oplus z }(OUT) =
+          \begin{cases}
+            OUT\cup USE(y)\cup USE(z), & \text{if } x \in OUT \\
+            OUT, & \text{otherwise}
+          \end{cases}
+        \]
+
+        Boundary condition - $OUT[EXIT] = \emptyset$   
 
       \end{mdframed}        
       
@@ -298,22 +371,54 @@
     \}
     \end{multline*}
 
-        Meet operation $\wedge = $ Union
+        Meet operation $\wedge = $ Union 
 
         Family of transfer functions $\mathcal{F}$ for each statement type
         including boundary conditions:  % TODO
 
       \end{mdframed}
 
+    \clearpage
       \item (5 points) Let the function $g: 2^{\{p,q,r, s\}} \rightarrow 2^{\{p,q,r,s\}}$ be defined 
       as $\lambda S. \{q, r\} \cup (S - \{p, q \})$. 
     
       Draw the \emph{representative relation} of $g$ as required by the IFDS framework:
     
       \begin{mdframed}
-        \vspace{5em}
-        %% TODO 
-        
+                    
+            % Set expression
+            \[
+            \lambda S.\ \{q, r\} \cup (S - \{p, q\})
+            \]
+            
+            % Bipartite graph
+            \begin{center}
+            \begin{tikzpicture}[every node/.style={circle, draw, minimum size=1cm}, node distance=1.5cm]
+            
+            % Top row
+            \node (l) at (0,2) {$\lambda$};
+            \node (p) at (2,2) {$p$};
+            \node (q) at (4,2) {$q$};
+            \node (r) at (6,2) {$r$};
+            \node (s) at (8,2) {$s$};
+            
+            % Bottom row
+            \node (l1) at (0,0) {$\lambda$};
+            \node (p1) at (2,0) {$p$};
+            \node (q1) at (4,0) {$q$};
+            \node (r1) at (6,0) {$r$};
+            \node (s1) at (8,0) {$s$};
+            
+            % Edges from lambda
+            \draw[->] (l) -- (l1);
+    
+            \draw[->] (l) -- (q1);
+            \draw[->] (l) -- (r1);
+            \draw[->] (s) -- (s1);
+            
+            \end{tikzpicture}
+            \end{center}
+                    
       \end{mdframed}
 
       \clearpage
