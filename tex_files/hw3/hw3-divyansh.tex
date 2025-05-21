@@ -321,7 +321,7 @@
 
         \end{itemize}
     
-        Boundary Condition: $OUT[ENTRY] = \emptyset$
+        Boundary Condition: $IN[ENTRY] = \emptyset$
 
       \end{mdframed}
 
@@ -331,8 +331,33 @@
       Draw the \emph{representative relation} of $g$ as required by the IFDS framework:
     
       \begin{mdframed}
-        \vspace{5em}
-        %% TODO 
+        \begin{tikzpicture}[
+    every node/.style={circle, draw, minimum size=1cm},
+    ->,
+    node distance=2cm and 1.5cm
+  ]
+
+  % Top node set (U)
+  \node (u1) at (0,0) {$\lambda$};
+  \node[right=of u1] (u2) {$p$};
+  \node[right=of u2] (u3) {$q$};
+  \node[right=of u3] (u4) {$r$};
+  \node[right=of u4] (u5) {$s$};
+
+  % Bottom node set (V)
+  \node[below=of u1] (v1) {$\lambda$};
+  \node[below=of u2] (v2) {$p$};
+  \node[below=of u3] (v3) {$q$};
+  \node[below=of u4] (v4) {$r$};
+  \node[below=of u5] (v5) {$s$};
+
+  % Directed edges from U (top) to V (bottom)
+  \draw (u1) -> (v1);
+  \draw (u1) -> (v3);
+  \draw (u1) -> (v4);
+  \draw (u5) -> (v5);
+
+\end{tikzpicture}
         
       \end{mdframed}
 
@@ -378,10 +403,61 @@
       of $G$ and $L$ and clearly state the node $n$ and its multiple immediate
       $L$-dominators.
       \begin{mdframed}
-      \vspace{3em}
-      %% TODO Comment out the correct answer.
-      %\textbf{True} % Provide proof.
-      %\textbf{False} % Provide counter example.
+      \textbf{False} % Provide counter example.
+
+      \textbf{Graph G}
+
+      \begin{tikzpicture}[
+          ->,
+          vertex/.style={circle, draw, minimum size=1cm},
+          node distance=2cm and 2cm
+        ]
+
+        % Nodes
+        \node[vertex] (N1) {1};
+        \node[vertex, right=of N1] (N2) {2};
+        \node[vertex, below=of N1] (N3) {3};
+        \node[vertex, below=of N2] (N4) {4};
+
+        % Edges from node 1
+        \draw (N1) to[bend left=15] node[midway, above] {$( $} (N2);
+        \draw (N1) -- (N3) node[midway, left] {$( $};
+
+        % Edges from node 2
+        \draw (N2) to[bend left=15] node[midway, right] {$[$} (N4);
+        \draw (N2) to[out=110, in=70, looseness=10] node[above] {$[$} (N2); % self-loop
+        \draw (N2) -- (N3) node[midway, out=110, in=70, below left] {$]$};
+
+        % Edges from node 4
+        \draw (N4) to[bend left=15] node[midway, right] {$)$} (N2); % back edge to 2
+        \draw (N4) -- (N3) node[midway, below] {$)$};
+        \draw (N4) to[out=290, in=270, looseness=10] node[right] {$]$} (N4); % self-loop
+
+      \end{tikzpicture}
+
+      \textbf{Context Free Grammer for Context Free Language L}
+
+      $ \sum = \{(, ), [, ]\} $
+
+      $ S \rightarrow S \: S \mid ( \: S \: ) \mid [ \: S \: ] \mid \epsilon $
+
+      \textbf{Explanation}
+
+      The node n that we will consider in the above graph is node 3:
+
+      The following are the L-paths from the entry (node 1) to node 3:
+
+      Path 1: $1 \xrightarrow{(} 2 \xrightarrow{[} 4 \xrightarrow{]} 4 \xrightarrow{)} 2 \xrightarrow{[} 2 \xrightarrow{]} 3$
+      
+      Path 2: $1 \xrightarrow{(} 2 \xrightarrow{[} 4 \xrightarrow{]} 4 \xrightarrow{)} 3$
+
+      From the above L-paths from entry (node 1) to node 3, we can see that the strict L-dominators of node 3 are node 1, node 2 and node 4
+
+      But we can see that node 3 doesn't have a unique immediate L-dominator, because the last strict L-dominator on Path 1 is node 2, while on Path 2 is node 4.
+
+      Therefore, we have shown that the labeled graph G, with node 1 as the entry, node 3 as exit, and node 3 as n, we have shown that two L-paths from entry to node n has different immediate L-dominators.
+
+      Therefore, it is false to say that each node n in G has a unique immediate L-dominator.
       \end{mdframed}
       
   \end{enumerate}
