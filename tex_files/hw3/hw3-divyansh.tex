@@ -296,7 +296,11 @@
 
             \item \textbf{Type 3:} \texttt{x = y $\oplus$ z}, where $x, y, z$ are variables and $\oplus \in \{+, -, *\}$.
             \[
-                \mathcal{F}_{x = y \oplus z}(S) = S \setminus \{x\}
+                \mathcal{F}_{x = y}(S) =
+                \begin{cases}
+                    S \cup \{x\}, & \text{if } y \in S \text{ or } \text{if } z \in S \\
+                    S \setminus \{x\}, & \text{otherwise}
+                \end{cases}
             \]
 
             \item \textbf{Type 4:} \texttt{x = source()}.
