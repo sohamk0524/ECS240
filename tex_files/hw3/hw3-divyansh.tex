@@ -120,8 +120,86 @@
         \end{itemize}
 
         \begin{mdframed}
-          \vspace{2em}
-          % TODO
+          \textbf{Definition 1:} For all $x, y \in V$ and for all $f \in F$, if $x \leq y$, then $f(x) \leq f(y)$.
+
+          \medskip
+
+          \textbf{Definition 2:} For all $x, y \in V$ and for all $f \in F$, $f(x \wedge y) \leq f(x) \wedge f(y)$.
+
+          \medskip
+
+          We aim to prove that these two definitions are equivalent by showing that Definition 1 implies Definition 2 and that Definition 2 implies Definition 1.
+
+          \medskip
+
+          \textbf{Part 1: Showing Defintion 1 implies Definition 2}
+
+          Let $x, y \in V$ be arbitrary, and define $z = x \wedge y$. By the definition of the meet operator, $z$ is the greatest lower bound of $x$ and $y$, so we have:
+          \[
+          z \leq x \quad \text{and} \quad z \leq y.
+          \]
+
+          By Definition 1, applying $f$ to both sides of these inequalities gives:
+          \[
+          f(z) \leq f(x) \quad \text{and} \quad f(z) \leq f(y).
+          \]
+
+          Therefore, $f(z)$ is a lower bound of $f(x)$ and $f(y)$. By the definition of the meet operator, $f(x) \wedge f(y)$ is the greatest lower bound of $f(x)$ and $f(y)$, so it must be that:
+          \[
+          f(z) \leq f(x) \wedge f(y).
+          \]
+
+          Since $z = x \wedge y$, we conclude:
+          \[
+          f(x \wedge y) \leq f(x) \wedge f(y),
+          \]
+          which is exactly the statement of Definition 2.
+
+          \medskip
+
+          Thus, we have shown that Definition 1 implies Definition 2.
+
+          \medskip
+
+          \textbf{Part 2: Showing Defintion 2 implies Definition 1}
+
+          Let $x, y \in V$ such that $x \leq y$, and define $z = f(x) \wedge f(y)$. By definition of the meet operator, $z$ is the greatest lower bound of $f(x)$ and $f(y)$, so we have:
+          \[
+          z \leq f(x) \quad \text{and} \quad z \leq f(y).
+          \]
+
+          By Definition 2, we have:
+          \[
+          f(x \wedge y) \leq z
+          \]
+
+          By the definition of the meet operator, we know $x \wedge y$ is the greatest lower bound of $x$ and $y$, and since we we know that $x \leq y$, that must mean:
+          \[
+          x \wedge y = x
+          \]
+
+          Substituting that into Definition 2, we have:
+          \[
+          f(x) \leq z
+          \]
+
+          Since $z \leq f(x)$ and $z \geq f(x)$, we conclude:
+          \[
+          z = f(x)
+          \]
+
+          Since $z \leq f(y)$ and $z = f(x)$, we conclude:
+          \[
+          f(x) \leq f(y)
+          \]
+
+          which is exactly the statement of Definition 1, because we choose $x$ and $y$ such that $x \leq y$.
+
+          Thus, we have shown that Definition 2 implies Definition 1.
+
+          \medskip
+
+          Since we have showed that Defintion 1 implies Definition 2 and Definition 2 implies Definition 1, we have proved that Defintion 1 is equivalent to Definition 2.
         \end{mdframed}
 
         \item  (5 point) $G_l$ is a CFG containing 10 basic blocks. \\We know nothing
@@ -321,7 +399,7 @@
 
         \end{itemize}
     
-        Boundary Condition: $IN[ENTRY] = \emptyset$
+        Boundary Condition: $OUT[START] = \emptyset$
 
       \end{mdframed}
 
@@ -338,14 +416,14 @@
   ]
 
   % Top node set (U)
-  \node (u1) at (0,0) {$\lambda$};
+  \node (u1) at (0,0) {$\Lambda$};
   \node[right=of u1] (u2) {$p$};
   \node[right=of u2] (u3) {$q$};
   \node[right=of u3] (u4) {$r$};
   \node[right=of u4] (u5) {$s$};
 
   % Bottom node set (V)
-  \node[below=of u1] (v1) {$\lambda$};
+  \node[below=of u1] (v1) {$\Lambda$};
   \node[below=of u2] (v2) {$p$};
   \node[below=of u3] (v3) {$q$};
   \node[below=of u4] (v4) {$r$};
@@ -453,7 +531,7 @@
 
       From the above L-paths from entry (node 1) to node 3, we can see that the strict L-dominators of node 3 are node 1, node 2 and node 4
 
-      But we can see that node 3 doesn't have a unique immediate L-dominator, because the last strict L-dominator on Path 1 is node 2, while on Path 2 is node 4.
+      But we can see that node 3 doesn't have a unique immediate L-dominator, because the immediate L-dominator on Path 1 is node 2, while on Path 2 is node 4.
 
       Therefore, we have shown that the labeled graph G, with node 1 as the entry, node 3 as exit, and node 3 as n, we have shown that two L-paths from entry to node n has different immediate L-dominators.
 
