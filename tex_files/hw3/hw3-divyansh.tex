@@ -301,13 +301,58 @@
       Define the dataflow analysis that detects such \emph{Useful} variables.
 
       \begin{mdframed}
-        Direction $D =$  % forward or backward
+        Direction $D =$ backward
 
-        Dataflow values $V = $  %TODO
+        Dataflow values $V = $ set of variables
 
-        Meet operation $\wedge = $ %TODO
+        Meet operation $\wedge = \cup$
 
         Transfer functions $\mathcal{F}$ for each statement type including boundary conditions:  % TODO
+
+        Family of transfer functions $\mathcal{F}$ for each statement type
+        including boundary conditions:
+
+        Let S be the input set of dataflow values into the per-statement transfer function
+
+        The following are the transfer functions for each statement type:
+
+        \begin{itemize}
+
+            \item \textbf{Type 1:} \texttt{x = c}, where $x$ is a variable and $c$ is a constant.
+            \[
+                \mathcal{F}_{x = c}(S) = S
+            \]
+
+            \item \textbf{Type 2:} \texttt{x = y}, where $x$ and $y$ are variables.
+            \[
+                \mathcal{F}_{x = y}(S) =
+                \begin{cases}
+                    S \cup \{y\}, & \text{if } x \in S \\
+                    S, & \text{otherwise}
+                \end{cases}
+            \]
+
+            \item \textbf{Type 3:} \texttt{x = y $\oplus$ z}, where $x, y, z$ are variables and $\oplus \in \{+, -, *\}$.
+            \[
+                \mathcal{F}_{x = y}(S) =
+                \begin{cases}
+                    S \cup \{y, z\}, & \text{if } x \in S \\
+                    S, & \text{otherwise}
+                \end{cases}
+            \]
+
+            \item \textbf{Type 4:} \texttt{f([y])}, where $[y]$ is a list of variables.
+            \[
+                \mathcal{F}_{f(\{y\})}(S) = S \cup set([y])
+            \]
+
+            \item \textbf{Type 5:} \texttt{x = f([y])}, where $x$ is a variable and $[y]$ is a list of variables.
+            \[
+                \mathcal{F}_{x = f(\{y\})}(S) = S \cup set([y])
+            \]
+
+
+        \end{itemize}
 
       \end{mdframed}
       
@@ -386,20 +431,22 @@
                 \mathcal{F}_{x = \text{source}()}(S) = S \cup \{x\}
             \]
 
-            \item \textbf{Type 5:} \texttt{f(\{y\})}, where $\{y\}$ is a list of variables.
+            \item \textbf{Type 5:} \texttt{f([y])}, where $[y]$ is a list of variables.
             \[
                 \mathcal{F}_{f(\{y\})}(S) = S
             \]
 
-            \item \textbf{Type 6:} \texttt{x = f(\{y\})}, where $x$ is a variable and $\{y\}$ is a list of variables.
+            \item \textbf{Type 6:} \texttt{x = f([y])}, where $x$ is a variable and $[y]$ is a list of variables.
             \[
                 \mathcal{F}_{x = f(\{y\})}(S) = S \setminus \{x\}
             \]
 
 
         \end{itemize}
-    
-        Boundary Condition: $OUT[START] = \emptyset$
+        
+        Assuming that Entry refers to a dummy basic block before the "actual" entry basic block in the CFG.
+        
+        Boundary Condition: $OUT[Entry] = \emptyset$
 
       \end{mdframed}
 
@@ -410,32 +457,32 @@
     
       \begin{mdframed}
         \begin{tikzpicture}[
-    every node/.style={circle, draw, minimum size=1cm},
-    ->,
-    node distance=2cm and 1.5cm
-  ]
+          every node/.style={circle, draw, minimum size=1cm},
+          ->,
+          node distance=2cm and 1.5cm
+        ]
 
-  % Top node set (U)
-  \node (u1) at (0,0) {$\Lambda$};
-  \node[right=of u1] (u2) {$p$};
-  \node[right=of u2] (u3) {$q$};
-  \node[right=of u3] (u4) {$r$};
-  \node[right=of u4] (u5) {$s$};
+        % Top node set (U)
+        \node (u1) at (0,0) {$\Lambda$};
+        \node[right=of u1] (u2) {$p$};
+        \node[right=of u2] (u3) {$q$};
+        \node[right=of u3] (u4) {$r$};
+        \node[right=of u4] (u5) {$s$};
 
-  % Bottom node set (V)
-  \node[below=of u1] (v1) {$\Lambda$};
-  \node[below=of u2] (v2) {$p$};
-  \node[below=of u3] (v3) {$q$};
-  \node[below=of u4] (v4) {$r$};
-  \node[below=of u5] (v5) {$s$};
+        % Bottom node set (V)
+        \node[below=of u1] (v1) {$\Lambda$};
+        \node[below=of u2] (v2) {$p$};
+        \node[below=of u3] (v3) {$q$};
+        \node[below=of u4] (v4) {$r$};
+        \node[below=of u5] (v5) {$s$};
 
-  % Directed edges from U (top) to V (bottom)
-  \draw (u1) -> (v1);
-  \draw (u1) -> (v3);
-  \draw (u1) -> (v4);
-  \draw (u5) -> (v5);
+        % Directed edges from U (top) to V (bottom)
+        \draw (u1) -> (v1);
+        \draw (u1) -> (v3);
+        \draw (u1) -> (v4);
+        \draw (u5) -> (v5);
 
-\end{tikzpicture}
+      \end{tikzpicture}
         
       \end{mdframed}
 
