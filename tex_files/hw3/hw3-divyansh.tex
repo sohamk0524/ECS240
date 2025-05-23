@@ -320,24 +320,28 @@
 
             \item \textbf{Type 1:} \texttt{x = c}, where $x$ is a variable and $c$ is a constant.
             \[
-                \mathcal{F}_{x = c}(S) = S
+                \mathcal{F}_{x = c}(S) =
+                \begin{cases}
+                    S \setminus \{x\} & \text{if } x \in S \\
+                    S & \text{otherwise}
+                \end{cases}
             \]
 
             \item \textbf{Type 2:} \texttt{x = y}, where $x$ and $y$ are variables.
             \[
                 \mathcal{F}_{x = y}(S) =
                 \begin{cases}
-                    S \cup \{y\}, & \text{if } x \in S \\
-                    S, & \text{otherwise}
+                    (S \setminus \{x\}) \cup \{y\} & \text{if } x \in S \\
+                    S & \text{otherwise}
                 \end{cases}
             \]
 
             \item \textbf{Type 3:} \texttt{x = y $\oplus$ z}, where $x, y, z$ are variables and $\oplus \in \{+, -, *\}$.
             \[
-                \mathcal{F}_{x = y}(S) =
+                \mathcal{F}_{x = y \oplus z}(S) =
                 \begin{cases}
-                    S \cup \{y, z\}, & \text{if } x \in S \\
-                    S, & \text{otherwise}
+                    (S \setminus \{x\}) \cup \{y, z\} & \text{if } x \in S \\
+                    S & \text{otherwise}
                 \end{cases}
             \]
 
@@ -348,15 +352,20 @@
 
             \item \textbf{Type 5:} \texttt{x = f([y])}, where $x$ is a variable and $[y]$ is a list of variables.
             \[
-                \mathcal{F}_{x = f(\{y\})}(S) = S \cup set([y])
+                \mathcal{F}_{x = f(\{y\})}(S) =
+                \begin{cases}
+                    (S \setminus \{x\}) \cup set([y]) & \text{if } x \in S \\
+                    S \cup set([y]) & \text{otherwise}
+                \end{cases}
             \]
 
-            Assuming that Exit refers to a dummy basic block after the "actual" exit basic block in the CFG.
-        
-            Boundary Condition: $IN[Exit] = \emptyset$
 
 
         \end{itemize}
+            
+        Assuming that Exit refers to a dummy basic block after the "actual" exit basic block in the CFG.
+        
+        Boundary Condition: $IN[Exit] = \emptyset$
 
       \end{mdframed}
       
@@ -416,17 +425,17 @@
             \[
                 \mathcal{F}_{x = y}(S) =
                 \begin{cases}
-                    S \cup \{x\}, & \text{if } y \in S \\
-                    S \setminus \{x\}, & \text{otherwise}
+                    S \cup \{x\} & \text{if } y \in S \\
+                    S \setminus \{x\} & \text{otherwise}
                 \end{cases}
             \]
 
             \item \textbf{Type 3:} \texttt{x = y $\oplus$ z}, where $x, y, z$ are variables and $\oplus \in \{+, -, *\}$.
             \[
-                \mathcal{F}_{x = y}(S) =
+                \mathcal{F}_{x = y \oplus z}(S) =
                 \begin{cases}
-                    S \cup \{x\}, & \text{if } y \in S \text{ or } \text{if } z \in S \\
-                    S \setminus \{x\}, & \text{otherwise}
+                    S \cup \{x\} & \text{if } y \in S \text{ or } \text{if } z \in S \\
+                    S \setminus \{x\} & \text{otherwise}
                 \end{cases}
             \]
 
