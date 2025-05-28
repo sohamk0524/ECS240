@@ -1,0 +1,20 @@
+PWD /Users/sohamkolhatkar/Desktop/UC Davis Info/YEAR 3/ECS240/All_HW/tex_files/hw4
+INPUT /Users/sohamkolhatkar/Library/TinyTeX/texmf.cnf
+INPUT /Users/sohamkolhatkar/Library/TinyTeX/texmf-dist/web2c/texmf.cnf
+INPUT /Users/sohamkolhatkar/Library/TinyTeX/texmf-var/web2c/pdftex/pdflatex.fmt
+INPUT /Users/sohamkolhatkar/Desktop/UC Davis Info/YEAR 3/ECS240/All_HW/tex_files/hw4/hw4-soham.tex
+OUTPUT hw4-soham.log
+INPUT /Users/sohamkolhatkar/Library/TinyTeX/texmf-dist/tex/latex/base/article.cls
+INPUT /Users/sohamkolhatkar/Library/TinyTeX/texmf-dist/tex/latex/base/article.cls
+INPUT /Users/sohamkolhatkar/Library/TinyTeX/texmf-dist/tex/latex/base/size12.clo
+INPUT /Users/sohamkolhatkar/Library/TinyTeX/texmf-dist/tex/latex/base/size12.clo
+INPUT /Users/sohamkolhatkar/Library/TinyTeX/texmf-dist/tex/latex/base/size12.clo
+INPUT /Users/sohamkolhatkar/Library/TinyTeX/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
+INPUT /Users/sohamkolhatkar/Library/TinyTeX/texmf-dist/tex/latex/geometry/geometry.sty
+INPUT /Users/sohamkolhatkar/Library/TinyTeX/texmf-dist/tex/latex/geometry/geometry.sty
+INPUT /Users/sohamkolhatkar/Library/TinyTeX/texmf-dist/tex/latex/graphics/keyval.sty
+INPUT /Users/sohamkolhatkar/Library/TinyTeX/texmf-dist/tex/latex/graphics/keyval.sty
+INPUT /Users/sohamkolhatkar/Library/TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.sty
+INPUT /Users/sohamkolhatkar/Library/TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.sty
+INPUT /Users/sohamkolhatkar/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
+INPUT /Users/sohamkolhatkar/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
