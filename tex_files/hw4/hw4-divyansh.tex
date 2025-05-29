@@ -1,0 +1,220 @@
+\documentclass[12pt]{article}
+    \usepackage[margin=1in]{geometry}
+    \usepackage{mdframed}
+    \usepackage{subcaption}
+    \usepackage{amssymb}
+    \usepackage{amsmath}
+    \usepackage{mathtools}
+
+    % Custom colors
+    \usepackage{color}
+    \definecolor{deepblue}{rgb}{0,0,0.5}
+    \definecolor{deepred}{rgb}{0.6,0,0}
+    \definecolor{deepgreen}{rgb}{0,0.5,0}
+    % Default fixed font does not support bold face
+    \DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{12} % for bold
+    \DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{12}  % for normal
+    \usepackage{listings}
+    \usepackage{url}
+
+    \usepackage{hyperref}
+
+    \usepackage{booktabs}
+    
+    \usepackage{tikz}
+    \usetikzlibrary{shapes,arrows,automata,positioning,cd}
+    \tikzset{
+      cfgedge/.style   = {black, ->, >=stealth},
+      forward/.style = { blue, ->, >=angle 45},
+      backward/.style = { red, densely dashed, ->, >=latex' },
+      backwardleft/.style = { red, densely dashed, <-, >=latex' },
+    }
+    \usepackage{xcolor}
+    
+    \newcommand{\cfgarrow}{\mathbin{\tikz[baseline]\draw[cfgedge,yshift=0.6ex] (0,0) -- (.9em,0);}}
+    \newcommand{\forwardarrow}{\mathbin{\tikz[baseline]\draw[forward,yshift=0.6ex] (0,0) -- (1em,0);}}
+    \newcommand{\backwardarrow}{\mathbin{\tikz[baseline]\draw[backward,yshift=0.6ex] (0,0) -- (.95em,0);}}
+  \newcommand{\dom}{\underline{\gg}}
+    
+    
+    \begin{document}
+    \lstset{
+    language=C,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\ttb\color{deepblue}\small,
+    emph={foo,bar,assert,baz},          % Custom highlighting
+    emphstyle=\ttb\color{deepred}\small,    % Custom highlighting style
+    stringstyle=\color{deepgreen}\small,
+    frame=tb,                         % Any extra options here
+    numbers=left,
+    stepnumber=1,
+    showstringspaces=false            % 
+    }
+    
+    \begin{center}
+        \bigskip
+        {\LARGE ECS 240 Programming Languages} \medskip
+                
+        {\Large Homework 4} \bigskip
+    
+    \end{center}
+    
+    \section*{About This Assignment}
+    
+    \begin{itemize}
+      \item This assignment tests you on your understanding of Java points-to
+      analysis.
+      \item To complete the assignment 
+            (i)~modify \texttt{hw4.tex}, 
+            (ii)~create the corresponding PDF document (using pdflatex, for example), and 
+            (iii)~submit the pdf electronically via Gradescope by the due date; 
+            see \href{https://www.gradescope.com/get_started#student-submission}{this page} and
+            \href{http://gradescope-static-assets.s3-us-west-2.amazonaws.com/help/submitting_hw_guide.pdf}{this document}.
+            Your assignment will not be graded and you will receive
+            no points if you do not follow these instructions. 
+      \item \textbf{When submitting the assignment on Gradescope, please mark which page
+        corresponds to each question on the assignment.} Your assignment will not be graded and you will receive
+        no points if you do not follow these instructions. 
+      \item The \LaTeX\ source has \texttt{TODO}~comments to clearly
+        indicate where changes need to be made. 
+      \item The \verb=\vspace= commands can be safely commented out.
+      \item This assignment can be worked on in a group of at most three. Enter
+      the names and email addresses of the team members in the space provided
+      below.
+    \end{itemize}
+
+    \begin{mdframed}
+      Team members:
+      \begin{itemize}
+        %TODO
+        \item Divyansh Rajesh Jain, drajeshjain@ucdavis.edu % Enter name and email address of first team member.
+        \item Soham Kolhatkar, sakolhatkar@ucdavis.edu % Comment out this line if working individually.
+      \end{itemize}
+    \end{mdframed}
+
+    
+    \newpage
+    \begin{enumerate}
+
+    
+
+\item (5 points) Consider the following Java-like code:
+  \begin{lstlisting}
+    class MyInteger {
+        public MyInteger(int v) {
+            this.val = v;
+        }
+        public int val;
+    }
+
+    void bar (MyInteger a, MyInteger b) {
+        if (a.val != b.val) return ;
+        if (a.val < 50) return ;
+        a.val--;
+        b.val--;
+        b.val--;
+        // P1
+    }
+  \end{lstlisting}
+  A program analyzer $A$
+  reports the following expression as an invariant 
+  at program point \lstinline$P1$: \lstinline$a.val > b.val$.
+
+  Provide an input for \lstinline$bar$ which shows that analyzer $A$ is \emph{unsound}.
+    \begin{mdframed}
+      \begin{lstlisting}
+        MyInteger x = new MyInteger(3);
+        bar(x, x);
+      \end{lstlisting}
+    \end{mdframed}
+
+  \newpage
+  \item (5 points) A Java statement involving multiple field reads and writes can be broken into
+  multiple statements each with a single field read or write involving temporary variables.
+
+  For example, the statement \lstinline$ x = y.field1.field2$ \\
+  can be rewritten as \\ 
+  \lstinline$T1 t1 = y.field1; x = t1.field2;$ where
+  \lstinline$T1$ is the type of \lstinline$y.field1$.
+
+  Similarly, the statement \lstinline$ b.field1.field2 = a;$ \\
+  can  be rewritten as \\ 
+  \lstinline$T1 t1 = b.field1; t1.field2 = a;$ where
+  \lstinline$T1$ is the type of \lstinline$b.field1$.
+
+  Given a Java program $P$, let $OneField(P)$ denote such a rewrite.
+  This rewrite does not reduce the precision of flow-sensitive field-sensitive points-to analysis for Java
+  (if you only consider the points-to sets of the variables in the original program $P$).
+  
+  State whether the following is \textbf{True} or \textbf{False}:
+
+  \emph{The result of a precise flow-insensitive field-sensitive points-to analysis 
+  for $P$ and $OneField(P)$ is the same with respect to the variables in 
+  the program $P$.}
+
+  If \textbf{True}, justify your answer.
+  If \textbf{False}, provide a counter-example in the form of a program $P$,
+  the rewritten program $OneField(P)$, and the points-to sets for variables
+  in $P$ and $OneField(P)$.
+    
+  \begin{mdframed}
+    \textbf{False}
+
+    Imagine we have a class called Test defined as follows:
+
+    \begin{lstlisting}
+      public class Test {
+        public Test f;
+        public Test g;
+
+        public Test() {
+            this.f = null;
+            this.g = null;
+        }
+      }
+
+    \end{lstlisting}
+
+    \textbf{Program P}
+        \begin{lstlisting}
+          Test a1 = new Test(); //o1
+          Test b1 = new Test(); //o2
+          Test a = new Test(); //o3
+          Test b = new Test(); //o4
+          Test p = new Test(); //o5
+          a.g = a1;
+          b.g = b1;
+          p.f = a;
+          p.f = b;
+          p.f = p.f.g;
+        \end{lstlisting}
+        %% Points-to relations for P using flow-insensitive analysis
+        \textbf{Points-to relations for P Precise Flow-Insenstive Analysis}
+
+        $\{\langle a1, o1 \rangle\, \langle b1, o2 \rangle\, \langle a, o3 \rangle, \langle b, o4 \rangle, \langle p, o5 \rangle, \langle a, o1 \rangle, \langle b, o2 \rangle \}$
+        %% Program OneStar(P)
+
+        \textbf{Program OneField(P)}
+        \begin{lstlisting}
+          Test a1 = new Test(); //o1
+          Test b1 = new Test(); //o2
+          Test a = new Test(); //o3
+          Test b = new Test(); //o4
+          Test p = new Test(); //o5
+          a.g = a1;
+          b.g = b1;
+          p.f = a;
+          p.f = b;
+          Test t1 = p.f
+          Test t2 = t1.g
+          p.f = t2
+        \end{lstlisting}
+
+        \textbf{Points-to relations for OneStar(P) Precise Flow-Insensitive Analysis}
+
+        $\{\langle a1, o1 \rangle\, \langle b1, o2 \rangle\, \langle a, o3 \rangle, \langle b, o4 \rangle, \langle p, o5 \rangle, \langle a, o1 \rangle, \langle b, o1 \rangle, \langle a, o2 \rangle \, \langle b, o2 \rangle \}$
+  \end{mdframed}
+
+\end{enumerate}
+    
+\end{document}
