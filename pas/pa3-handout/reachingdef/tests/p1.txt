@@ -1,0 +1,17 @@
+c This is a comment.
+p 2 5 5 1 5
+c bb1: v1 = c;
+b 1 1
+e 1 2
+c bb2: ;
+b 2
+e 2 3
+e 2 5
+c bb3: v2 = v1;
+b 3 2 1
+c bb4: v1 = c;
+e 3 4
+b 4 1
+e 4 2
+c bb5: print(v1, v2);
+b 5 0 1 2
