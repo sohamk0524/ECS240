@@ -1,0 +1,20 @@
+c Test case with address-of and copy statements
+p 8 8
+t 1 2
+t 2 2
+t 3 2
+t 4 1
+t 5 1
+t 6 0
+t 7 0
+t 8 0
+c layer 2
+s 0 1 -1 4
+s 0 2 -1 5
+s 0 3 0 1
+s 0 3 0 2
+c layer 1
+s 0 4 -1 6
+s 0 4 -1 7
+s 0 5 0 4
+s 0 5 -1 8

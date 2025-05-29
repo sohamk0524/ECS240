@@ -130,7 +130,7 @@ def make_points_to_sets(constraints, total_vars):
             points_to = const[1]
             what_pointer_points_to = pts_to[pointer]
 
-            for a in what_pointer_points_to:
+            for a in list(what_pointer_points_to):
                 for pts_to_val in pts_to[points_to]:
                     if pts_to_val not in pts_to[a]:
                         changed = True

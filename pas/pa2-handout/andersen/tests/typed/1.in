@@ -1,0 +1,6 @@
+c Test case with a single address-of statement.
+p 2 1
+t 1 1
+t 2 0
+c layer 1
+s 0 1 -1 2

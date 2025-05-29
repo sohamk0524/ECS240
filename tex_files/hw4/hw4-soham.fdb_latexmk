@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1748398401.68909 "/Users/sohamkolhatkar/Desktop/UC Davis Info/YEAR 3/ECS240/All_HW/tex_files/hw4/hw4-soham.tex" "hw4-soham.pdf" "hw4-soham" 1748398401.86123 2
-  "/Users/sohamkolhatkar/Desktop/UC Davis Info/YEAR 3/ECS240/All_HW/tex_files/hw4/hw4-soham.tex" 1748398401.46106 7817 8ea1f514be9204a242d71be1fdec8263 ""
+["pdflatex"] 1748493301.12381 "/Users/sohamkolhatkar/Desktop/UC Davis Info/YEAR 3/ECS240/All_HW/tex_files/hw4/hw4-soham.tex" "hw4-soham.pdf" "hw4-soham" 1748493301.1869 2
+  "/Users/sohamkolhatkar/Desktop/UC Davis Info/YEAR 3/ECS240/All_HW/tex_files/hw4/hw4-soham.tex" 1748493301.04338 7781 6f4deb8feef49864cfd35e70fea16dfd ""
   "/Users/sohamkolhatkar/Library/TinyTeX/texmf-dist/fonts/tfm/public/cm/cmr12.tfm" 1136768653 1288 655e228510b4c2a1abe905c368440826 ""
   "/Users/sohamkolhatkar/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty" 1644112042 7237 bdd120a32c8fdb4b433cf9ca2e7cd98a ""
   "/Users/sohamkolhatkar/Library/TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.sty" 1572645307 1057 525c2192b5febbd8c1f662c9468335bb ""
@@ -11,8 +11,8 @@
   "/Users/sohamkolhatkar/Library/TinyTeX/texmf-dist/web2c/texmf.cnf" 1727217670 42021 a58d36c7ede3d2fc9f93da62d691ddff ""
   "/Users/sohamkolhatkar/Library/TinyTeX/texmf-var/web2c/pdftex/pdflatex.fmt" 1728616512 1901421 0c9ef9666ab231454e892acb79d183c7 ""
   "/Users/sohamkolhatkar/Library/TinyTeX/texmf.cnf" 1728681279.73883 708 85fd07691b6294ba94c59dbc62380410 ""
-  "hw4-soham.aux" 0 -1 0 "pdflatex"
-  "hw4-soham.tex" 1748398401.46106 7817 8ea1f514be9204a242d71be1fdec8263 ""
+  "hw4-soham.aux" 1748493301.12333 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "hw4-soham.tex" 1748493301.04338 7781 6f4deb8feef49864cfd35e70fea16dfd ""
   "mdframed.sty" 0 -1 0 ""
   (generated)
   "hw4-soham.aux"

@@ -1,0 +1,7 @@
+c Test case with only address-of statements.
+p 10 5
+s 0 2 -1 2
+s 0 4 -1 2
+s 0 6 -1 8
+s 0 8 -1 1
+s 0 10 -1 10

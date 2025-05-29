@@ -123,11 +123,11 @@
   Provide an input for \lstinline$bar$ which shows that analyzer $A$ is \emph{unsound}.
     \begin{mdframed}
   %\vspace{2em}
-        \lstinline$MyInteger a = MyInteger(-2,147,483,647) //Integer.MIN_VALUE + 1; $
+        \lstinline$MyInteger a = MyInteger(Integer.MIN_VALUE + 1)  $
         
-        \lstinline$MyInteger b = MyInteger(-2,147,483,647) //Integer.MIN_VALUE + 1;$
+        \lstinline$MyInteger b = MyInteger(Integer.MIN_VALUE + 1) $
 
-        \textbf{This answer is assuming that a.val and b.val are signed 32-bit integers}
+        %$\textbf{This answer is assuming that a.val and b.val are signed 32-bit integers}
     
         The example above shows an input that will violate the invariant at $P1$. This occurs in a bug because if you subtract 1 from $a.val$ then it will go to Integer.MIN\_VALUE, however if you subtract 2 from b, then it will result in an \textbf{integer underflow} and will result in $b.val$ being a positive number. This input shows that analyzer $A$ is unsound.
         
@@ -174,14 +174,14 @@
           b1 = o2;
           a.g = a1;
           b.g = b1;
-          p.f = &a;
-          p.f = &b;
+          p.f = a;
+          p.f = b;
           p.f = p.f.g;
         \end{lstlisting}
         %% Points-to relations for P using flow-insensitive analysis
         \textbf{Points-to relations for P Precise Flow-Insenstive Analysis}
 
-        $\{\langle a1, o1 \rangle\, \langle b1, o2 \rangle\, \langle a, a1 \rangle, \langle b, b1 \rangle, \langle p, a \rangle, \langle p, b \rangle, \langle a, a2 \rangle, \langle b, b2 \rangle \}$
+        $\{\langle a1, o1 \rangle\, \langle b1, o2 \rangle\, \langle a, a1 \rangle, \langle b, b1 \rangle, \langle p, a \rangle, \langle p, b \rangle, \langle a, o1 \rangle, \langle b, o2 \rangle \}$
         %% Program OneStar(P)
 
         \textbf{Program OneField(P)}
@@ -190,15 +190,15 @@
           b1 = o2;
           a.g = a1;
           b.g = b1;
-          p.f = &a;
-          p.f = &b;
+          p.f = a;
+          p.f = b;
           t1 = p.f
           t2 = t1.g
           p.f = t2
         \end{lstlisting}
 
                 \textbf{Points-to relations for OneStar(P) Precise Flow-Insensitive Analysis}
-        $\{\langle a1, o1 \rangle\, \langle b1, o2 \rangle\, \langle a, a1 \rangle, \langle b, b1 \rangle, \langle p, a \rangle, \langle p, b \rangle, \langle a, a2 \rangle, \langle b, b2 \rangle, \langle a, b2 \rangle, \langle b, a2 \rangle \}$
+        $\{\langle a1, o1 \rangle\, \langle b1, o2 \rangle\, \langle a, a1 \rangle, \langle b, b1 \rangle, \langle p, a \rangle, \langle p, b \rangle, \langle a, o1 \rangle, \langle b, o1 \rangle, \langle a, o2 \rangle, \langle b, o2 \rangle \}$
 
     
   \end{mdframed}
