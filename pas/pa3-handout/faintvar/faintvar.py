@@ -89,10 +89,6 @@ class DataFlowAnalysis:
         pass
     
     @abstractmethod
-    def set_domain(self):
-        pass
-    
-    @abstractmethod
     def set_direction(self):
         pass
 
@@ -138,9 +134,7 @@ class DataFlowAnalysis:
             else:
                 raise NotImplementedError()
 
-
     def solve(self):
-        self.set_domain() #Initialize domain of dataflow values
         self.set_direction() #Initialize direction of dataflow analysis
         self._init_dataflow_values_per_basic_block() #Initialize dataflow values at every basic block
         self._set_boundary_condition() #Initialize boundary condition at every basic block
@@ -184,13 +178,12 @@ class DataFlowAnalysis:
                 else:
                     raise NotImplementedError()
 
+#End of Common Utilities
+
 class FaintVariables(DataFlowAnalysis):
     def top(self):
         return self.extra_info["all_vars"]
     
-    def set_domain(self):
-        self.domain = self.extra_info["all_vars"]
-
     def set_direction(self):
         self.direction = "backward"
 
@@ -251,7 +244,6 @@ def dump_faint_variables_info(output_path: str, faint_variables: FaintVariables)
                 file_obj.write(f" {i}")
             file_obj.write("\n")
 
-#End of Common Utilities
 def main():
     if len(sys.argv) != 3:
         print("Wrong arguments")

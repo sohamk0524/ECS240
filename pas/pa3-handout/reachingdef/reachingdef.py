@@ -89,10 +89,6 @@ class DataFlowAnalysis:
         pass
     
     @abstractmethod
-    def set_domain(self):
-        pass
-    
-    @abstractmethod
     def set_direction(self):
         pass
 
@@ -140,7 +136,6 @@ class DataFlowAnalysis:
 
 
     def solve(self):
-        self.set_domain() #Initialize domain of dataflow values
         self.set_direction() #Initialize direction of dataflow analysis
         self._init_dataflow_values_per_basic_block() #Initialize dataflow values at every basic block
         self._set_boundary_condition() #Initialize boundary condition at every basic block
@@ -191,9 +186,6 @@ class ReachingDefinitions(DataFlowAnalysis):
     def top(self):
         return set()
     
-    def set_domain(self):
-        self.domain = self.extra_info["all_defs"]
-
     def set_direction(self):
         self.direction = "forward"
 
