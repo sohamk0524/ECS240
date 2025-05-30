@@ -257,6 +257,5 @@ def main():
 
     dump_reaching_defintions_info(output_path, reaching_definitions)
 
-
 if __name__ == "__main__":
     main()
