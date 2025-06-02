@@ -1,1 +1,2 @@
-Name, email
+<Soham Kolhatkar>, <sakolhatkar@ucdavis.edu>
+<Divyansh Rajesh Jain>, <drajeshjain@ucdavis.edu>
