@@ -244,14 +244,7 @@ def dump_faint_variables_info(output_path: str, faint_variables: FaintVariables)
                 file_obj.write(f" {i}")
             file_obj.write("\n")
 
-def main():
-    if len(sys.argv) != 3:
-        print("Wrong arguments")
-        return 1
-    
-    input_path = sys.argv[1]
-    output_path = sys.argv[2]
-
+def main_logic(input_path: str, output_path: str):
     basic_blocks, cfg, rev_cfg, entry, exit, num_vars = parse_input(input_path)
 
     extra_info = faint_variable_info(num_vars)
@@ -260,6 +253,16 @@ def main():
     faint_variables.solve()
 
     dump_faint_variables_info(output_path, faint_variables)
+
+def main():
+    if len(sys.argv) != 3:
+        print("Wrong arguments")
+        return 1
+    
+    input_path = sys.argv[1]
+    output_path = sys.argv[2]
+
+    main_logic(input_path, output_path) 
 
 if __name__ == "__main__":
     main()

@@ -240,14 +240,7 @@ def dump_reaching_defintions_info(output_path: str, reaching_definitions: Reachi
                 file_obj.write(f" {i}")
             file_obj.write("\n")
 
-def main():
-    if len(sys.argv) != 3:
-        print("Wrong arguments")
-        return 1
-    
-    input_path = sys.argv[1]
-    output_path = sys.argv[2]
-
+def main_logic(input_path: str, output_path: str):
     basic_blocks, cfg, rev_cfg, entry, exit, num_vars = parse_input(input_path)
 
     extra_info = get_reaching_definitions_info(basic_blocks, num_vars)
@@ -256,6 +249,16 @@ def main():
     reaching_definitions.solve()
 
     dump_reaching_defintions_info(output_path, reaching_definitions)
+
+def main():
+    if len(sys.argv) != 3:
+        print("Wrong arguments")
+        return 1
+    
+    input_path = sys.argv[1]
+    output_path = sys.argv[2]
+
+    main_logic(input_path, output_path) 
 
 if __name__ == "__main__":
     main()
