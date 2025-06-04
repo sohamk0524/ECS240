@@ -5,6 +5,8 @@
     \usepackage{amssymb}
     \usepackage{amsmath}
     \usepackage{mathtools}
+    \usepackage{array}
+
 
     % Custom colors
     \usepackage{color}
@@ -149,37 +151,368 @@ of a Galois connection explaining why it does not satisfy the given proposition:
   \item 
  \emph{$\alpha ( c_1 \sqcup c_2 ) = \alpha(c_1) \sqcup \alpha(c_2)$, for all $c_1, c_2 \in C$}
  \begin{mdframed}
-    \vspace{2em}
-    %% TODO Comment out the correct answer.
-    %\textbf{True} 
-    %\textbf{False}
+  \textbf{False}
+
+  \begin{minipage}{0.48\textwidth}
+\centering
+% First Hasse Diagram
+\begin{tikzpicture}[scale=1, every node/.style={draw=none}]
+  \node (top) at (0,4) {$\top$};
+  \node (c3) at (0,3) {$3$};
+  \node (c2) at (-1.5,2) {$2$};
+  \node (c1) at (1.5,2) {$1$};
+  \node (bottom) at (0,0) {$\bot$};
+
+  \draw (top) -- (c3);
+  \draw (c3) -- (c2);
+  \draw (c3) -- (c1);
+  \draw (c1) -- (bottom);
+  \draw (c2) -- (bottom);
+\end{tikzpicture}
+
+\vspace{0.5em}
+(a) $C$ lattice 
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+% Second Hasse Diagram
+\begin{tikzpicture}[scale=1, every node/.style={draw=none}]
+  \node (top) at (0,5) {$\top$};
+  \node (a4) at (0,4) {$A$};
+  \node (a3) at (0,3) {$B$};
+  \node (a2) at (-1.2,2) {$C$};
+  \node (a1) at (1.2,2) {$D$};
+  \node (bottom) at (0,0) {$\bot$};
+
+  \draw (top) -- (a4);
+  \draw (a4) -- (a3);
+  \draw (a3) -- (a2);
+  \draw (a3) -- (a1);
+  \draw (a2) -- (bottom);
+  \draw (a1) -- (bottom);
+\end{tikzpicture}
+
+\vspace{0.5em}
+(b) $A$ lattice 
+\end{minipage}
+
+\begin{minipage}{0.45\textwidth}
+\centering
+\textbf{Alpha Function ($\alpha$)}\\[0.5em]
+\begin{tabular}{>{$}c<{$} >{$}c<{$}}
+\textbf{C} & \textbf{A} \\
+\hline
+\top    & \top \\
+3       & A \\
+2       & C \\
+1       & D \\
+\bot    & \bot \\
+\end{tabular}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\centering
+\textbf{Gamma Function ($\gamma$)}\\[0.5em]
+\begin{tabular}{>{$}c<{$} >{$}c<{$}}
+\textbf{A} & \textbf{C} \\
+\hline
+\top    & \top \\
+A       & 3 \\
+B       & \bot \\
+C       & 2 \\
+D       & 1 \\
+\bot    & \bot \\
+\end{tabular}
+\end{minipage}
+
+Now consider $c_1 = 1$ and $c_2 = 2$:
+
+$\alpha ( c_1 \sqcup c_2 ) = A$
+
+$\alpha(c_1) \sqcup \alpha(c_2) = B$
+
+So we can see that $\alpha ( c_1 \sqcup c_2 ) = \alpha(c_1) \sqcup \alpha(c_2)$ does not hold for all $c_1$, $c_2 \in C$
+
 \end{mdframed}
 
 \item 
  \emph{$\alpha ( c_1 \sqcap c_2 ) = \alpha(c_1) \sqcap \alpha(c_2)$, for all $c_1, c_2 \in C$}
  \begin{mdframed}
-    \vspace{2em}
-    %% TODO Comment out the correct answer.
-    %\textbf{True} 
-    %\textbf{False}
+  \textbf{False}
+
+  \begin{minipage}{0.48\textwidth}
+\centering
+% First Hasse Diagram
+\begin{tikzpicture}[scale=1.2, every node/.style={draw=none}]
+
+  % Nodes
+  \node (top) at (0,4) {$\top$};
+  \node (one) at (-1.2,3) {1};
+  \node (two) at (1.2,3) {2};
+  \node (three) at (0,2) {3};
+  \node (bottom) at (0,0) {$\bot$};
+
+  % Edges (cover relations only)
+  \draw (top) -- (one);
+  \draw (top) -- (two);
+  \draw (one) -- (three);
+  \draw (two) -- (three);
+  \draw (three) -- (bottom);
+
+\end{tikzpicture}
+
+\vspace{0.5em}
+(a) $C$ lattice 
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+% Second Hasse Diagram
+\begin{tikzpicture}[scale=1.2, every node/.style={draw=none}]
+
+  % Nodes
+  \node (top) at (0,5) {$\top$};
+  \node (A) at (0,4) {A};
+  \node (C) at (-1.2,3) {C};
+  \node (D) at (1.2,3) {D};
+  \node (B) at (0,2) {B};
+  \node (bottom) at (0,0) {$\bot$};
+
+  % Edges (cover relations)
+  \draw (top) -- (A);
+  \draw (A) -- (C);
+  \draw (A) -- (D);
+  \draw (C) -- (B);
+  \draw (D) -- (B);
+  \draw (B) -- (bottom);
+
+\end{tikzpicture}
+
+\vspace{0.5em}
+(b) $A$ lattice 
+\end{minipage}
+
+\begin{minipage}{0.45\textwidth}
+\centering
+\textbf{Alpha Function ($\alpha$)}\\[0.5em]
+\begin{tabular}{>{$}c<{$} >{$}c<{$}}
+\textbf{C} & \textbf{A} \\
+\hline
+\top    & \top \\
+3       & A \\
+2       & C \\
+1       & D \\
+\bot    & \bot \\
+\end{tabular}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\centering
+\textbf{Gamma Function ($\gamma$)}\\[0.5em]
+\begin{tabular}{>{$}c<{$} >{$}c<{$}}
+\textbf{A} & \textbf{C} \\
+\hline
+\top    & \top \\
+A       & 3 \\
+B       & \bot \\
+C       & 2 \\
+D       & 1 \\
+\bot    & \bot \\
+\end{tabular}
+\end{minipage}
+
+Now consider $c_1 = 1$ and $c_2 = 2$:
+
+$\alpha ( c_1 \sqcap c_2 ) = A$
+
+$\alpha(c_1) \sqcap \alpha(c_2) = B$
+
+So we can see that $\alpha ( c_1 \sqcap c_2 ) = \alpha(c_1) \sqcap \alpha(c_2)$ does not hold for all $c_1$, $c_2 \in C$
+
 \end{mdframed}
 
 \item 
  \emph{$\gamma ( a_1 \sqcup a_2 ) = \gamma(a_1) \sqcup \gamma(a_2)$, for all $a_1, a_2 \in A$}
  \begin{mdframed}
-    \vspace{2em}
-    %% TODO Comment out the correct answer.
-    %\textbf{True} 
-    %\textbf{False}
+      \textbf{False}
+
+  \begin{minipage}{0.48\textwidth}
+\centering
+% First Hasse Diagram
+\begin{tikzpicture}[scale=1, every node/.style={draw=none}]
+  \node (top) at (0,4) {$\top$};
+  \node (c3) at (0,3) {$3$};
+  \node (c2) at (-1.5,2) {$2$};
+  \node (c1) at (1.5,2) {$1$};
+  \node (bottom) at (0,0) {$\bot$};
+
+  \draw (top) -- (c3);
+  \draw (c3) -- (c2);
+  \draw (c3) -- (c1);
+  \draw (c1) -- (bottom);
+  \draw (c2) -- (bottom);
+\end{tikzpicture}
+
+\vspace{0.5em}
+(a) $C$ lattice 
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+% Second Hasse Diagram
+\begin{tikzpicture}[scale=1, every node/.style={draw=none}]
+  \node (top) at (0,5) {$\top$};
+  \node (a4) at (0,4) {$A$};
+  \node (a3) at (0,3) {$B$};
+  \node (a2) at (-1.2,2) {$C$};
+  \node (a1) at (1.2,2) {$D$};
+  \node (bottom) at (0,0) {$\bot$};
+
+  \draw (top) -- (a4);
+  \draw (a4) -- (a3);
+  \draw (a3) -- (a2);
+  \draw (a3) -- (a1);
+  \draw (a2) -- (bottom);
+  \draw (a1) -- (bottom);
+\end{tikzpicture}
+
+\vspace{0.5em}
+(b) $A$ lattice 
+\end{minipage}
+
+\begin{minipage}{0.45\textwidth}
+\centering
+\textbf{Alpha Function ($\alpha$)}\\[0.5em]
+\begin{tabular}{>{$}c<{$} >{$}c<{$}}
+\textbf{C} & \textbf{A} \\
+\hline
+\top    & \top \\
+3       & A \\
+2       & C \\
+1       & D \\
+\bot    & \bot \\
+\end{tabular}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\centering
+\textbf{Gamma Function ($\gamma$)}\\[0.5em]
+\begin{tabular}{>{$}c<{$} >{$}c<{$}}
+\textbf{A} & \textbf{C} \\
+\hline
+\top    & \top \\
+A       & 3 \\
+B       & \bot \\
+C       & 2 \\
+D       & 1 \\
+\bot    & \bot \\
+\end{tabular}
+\end{minipage}
+
+Now consider $a_1 = C$ and $a_2 = D$:
+
+$\gamma ( a_1 \sqcup a_2 ) = \bot$
+
+$\gamma(a_1) \sqcup \gamma(a_2) = 3$
+
+So we can see that $\gamma ( a_1 \sqcup a_2 ) = \gamma(a_1) \sqcup \gamma(a_2)$ does not hold for all $a_1$, $a_2 \in A$
 \end{mdframed}
 
 \item 
  \emph{$\gamma ( a_1 \sqcap a_2 ) = \gamma(a_1) \sqcap \gamma(a_2)$, for all $a_1, a_2 \in A$}
  \begin{mdframed}
-    \vspace{2em}
-    %% TODO Comment out the correct answer.
-    %\textbf{True} 
-    %\textbf{False}
+  \textbf{False}
+
+  \begin{minipage}{0.48\textwidth}
+\centering
+% First Hasse Diagram
+\begin{tikzpicture}[scale=1.2, every node/.style={draw=none}]
+
+  % Nodes
+  \node (top) at (0,4) {$\top$};
+  \node (one) at (-1.2,3) {1};
+  \node (two) at (1.2,3) {2};
+  \node (three) at (0,2) {3};
+  \node (bottom) at (0,0) {$\bot$};
+
+  % Edges (cover relations only)
+  \draw (top) -- (one);
+  \draw (top) -- (two);
+  \draw (one) -- (three);
+  \draw (two) -- (three);
+  \draw (three) -- (bottom);
+
+\end{tikzpicture}
+
+\vspace{0.5em}
+(a) $C$ lattice 
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+% Second Hasse Diagram
+\begin{tikzpicture}[scale=1.2, every node/.style={draw=none}]
+
+  % Nodes
+  \node (top) at (0,5) {$\top$};
+  \node (A) at (0,4) {A};
+  \node (C) at (-1.2,3) {C};
+  \node (D) at (1.2,3) {D};
+  \node (B) at (0,2) {B};
+  \node (bottom) at (0,0) {$\bot$};
+
+  % Edges (cover relations)
+  \draw (top) -- (A);
+  \draw (A) -- (C);
+  \draw (A) -- (D);
+  \draw (C) -- (B);
+  \draw (D) -- (B);
+  \draw (B) -- (bottom);
+
+\end{tikzpicture}
+
+\vspace{0.5em}
+(b) $A$ lattice 
+\end{minipage}
+
+\begin{minipage}{0.45\textwidth}
+\centering
+\textbf{Alpha Function ($\alpha$)}\\[0.5em]
+\begin{tabular}{>{$}c<{$} >{$}c<{$}}
+\textbf{C} & \textbf{A} \\
+\hline
+\top    & \top \\
+3       & A \\
+2       & C \\
+1       & D \\
+\bot    & \bot \\
+\end{tabular}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\centering
+\textbf{Gamma Function ($\gamma$)}\\[0.5em]
+\begin{tabular}{>{$}c<{$} >{$}c<{$}}
+\textbf{A} & \textbf{C} \\
+\hline
+\top    & \top \\
+A       & 3 \\
+B       & \bot \\
+C       & 2 \\
+D       & 1 \\
+\bot    & \bot \\
+\end{tabular}
+\end{minipage}
+
+Now consider $a_1 = C$ and $a_2 = D$:
+
+$\gamma ( a_1 \sqcap a_2 ) = \bot$
+
+$\gamma(a_1) \sqcap \gamma(a_2) = 3$
+
+So we can see that $\gamma ( a_1 \sqcap a_2 ) = \gamma(a_1) \sqcap \gamma(a_2)$ does not hold for all $a_1$, $a_2 \in A$
+
 \end{mdframed}
 
 
