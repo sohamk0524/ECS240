@@ -2,6 +2,7 @@
     \usepackage[margin=1in]{geometry}
     \usepackage{mdframed}
     \usepackage{subcaption}
+    \usepackage{caption}
     \usepackage{amssymb}
     \usepackage{amsmath}
     \usepackage{mathtools}
@@ -135,7 +136,7 @@
     However when trying to find the least upper bound between $d,e$, we can see that both $b$ and $c$ are the smallest upper bounds for the subset $d,e$. If we call all upper bounds $U$, this means  $b \leq U$. This also means $c \leq U$. This implies that $b \leq c$ and $c \leq b$. However, this can only be possible if $c == b$, which we know is not true. This violates the antisymmetry property, therefore $d,e$ do not have a least upper bound, which violates the condition of a complete lattice that all subsets must have a LUB and GLB, so it is not a complete lattice. 
     
 \end{mdframed}
-
+\newpage
 
 \item  (20 points) 
 Let $(C, \gamma, \alpha, A)$ be a Galois connections between complete lattices 
@@ -145,43 +146,326 @@ For each of the following state whether \textbf{True} or \textbf{False};
 if True provide a proof, and if false, provide a counterexample in the form 
 of a Galois connection explaining why it does not satisfy the given proposition: 
 
+
+
 \begin{enumerate}
   \item 
  \emph{$\alpha ( c_1 \sqcup c_2 ) = \alpha(c_1) \sqcup \alpha(c_2)$, for all $c_1, c_2 \in C$}
  \begin{mdframed}
-    \vspace{2em}
+
     %% TODO Comment out the correct answer.
-    %\textbf{True} 
-    %\textbf{False}
+    %%\textbf{True}
+
+    \textbf{False}
+
+    Left is concrete lattice, right is abstract lattice
+
+    \begin{tikzpicture}[>=Stealth, thick, node distance=1.5cm]
+
+        % Concrete lattice (left)
+        \node (topC) at (0,4.5) {$\top$};
+        \node (c3) at (0,3) {$c_3$};
+        \node (c2) at (-1,1.5) {$c_2$};
+        \node (c1) at (1,1.5) {$c_1$};
+        \node (botC) at (0,0) {$\bot$};
+        
+        \draw (topC) -- (c3);
+        \draw (c3) -- (c2);
+        \draw (c3) -- (c1);
+        \draw (c2) -- (botC);
+        \draw (c1) -- (botC);
+        
+        % Abstract lattice (right)
+        \node (topA) at (5,4.5) {$\top$};
+        \node (a4) at (5,3.5) {$a_4$};
+        \node (a3) at (5,2.5) {$a_3$};
+        \node (a2) at (4.2,1.5) {$a_2$};
+        \node (a1) at (5.8,1.5) {$a_1$};
+        \node (botA) at (5,0) {$\bot$};
+        
+        \draw (topA) -- (a4) -- (a3);
+        \draw (a3) -- (a2);
+        \draw (a3) -- (a1);
+        \draw (a2) -- (botA);
+        \draw (a1) -- (botA);
+        
+
+        
+    \end{tikzpicture}
+
+    \begin{center}
+    \begin{minipage}{0.45\textwidth}
+    \centering
+    \textbf{Abstraction function \( \alpha \)}\\[0.5em]
+    \begin{tabular}{|c|c|}
+    \hline
+    \( c \in C \) & \( \alpha(c) \in A \) \\
+    \hline
+    \( \bot \) & \( \bot \) \\
+    \( c_1 \) & \( a_1 \) \\
+    \( c_2 \) & \( a_2 \) \\
+    \( c_3 \) & \( a_4 \) \\
+    \( \top \) & \( \top \) \\
+    \hline
+    \end{tabular}
+    \end{minipage}
+    \hspace{1cm}
+    \begin{minipage}{0.45\textwidth}
+    \centering
+    \textbf{Concretization function \( \gamma \)}\\[0.5em]
+    \begin{tabular}{|c|c|}
+    \hline
+    \( a \in A \) & \( \gamma(a) \in C \) \\
+    \hline
+    \( \bot \) & \( \bot \) \\
+    \( a_1 \) & \( \ c_1 \) \\
+    \( a_2 \) & \( \ c_2 \) \\
+    \( a_3 \) & \( \ c_3 \) \\
+    \( a_4 \) & \( \top \) \\
+    \( \top \) & \( \top \) \\
+    \hline
+    \end{tabular}
+    \end{minipage}
+    \end{center}
+
+    
 \end{mdframed}
+
 
 \item 
  \emph{$\alpha ( c_1 \sqcap c_2 ) = \alpha(c_1) \sqcap \alpha(c_2)$, for all $c_1, c_2 \in C$}
  \begin{mdframed}
-    \vspace{2em}
+    
     %% TODO Comment out the correct answer.
     %\textbf{True} 
-    %\textbf{False}
+     \textbf{False}
+
+\begin{tikzpicture}[>=Stealth, thick, node distance=1.5cm]
+
+    % Abstract lattice (left) - flipped vertically
+    \node (topC) at (0,-4.5) {$\bot$};
+    \node (c3) at (0,-3) {$c_3$};
+    \node (c2) at (-1,-1.5) {$c_2$};
+    \node (c1) at (1,-1.5) {$c_1$};
+    \node (botC) at (0,0) {$\top$};
+    
+    \draw (topC) -- (c3);
+    \draw (c3) -- (c2);
+    \draw (c3) -- (c1);
+    \draw (c2) -- (botC);
+    \draw (c1) -- (botC);
+    
+    
+    % Concrete lattice (right) - flipped vertically
+    \node (topA) at (5,-4.5) {$\bot$};
+    \node (a4) at (5,-3.5) {$a_4$};
+    \node (a3) at (5,-2.5) {$a_3$};
+    \node (a2) at (4.2,-1.5) {$a_2$};
+    \node (a1) at (5.8,-1.5) {$a_1$};
+    \node (botA) at (5,0) {$\top$};
+    
+    \draw (topA) -- (a4) -- (a3);
+    \draw (a3) -- (a2);
+    \draw (a3) -- (a1);
+    \draw (a2) -- (botA);
+    \draw (a1) -- (botA);
+
+\end{tikzpicture}
+
+        \begin{center}
+    \begin{minipage}{0.45\textwidth}
+    \centering
+    \textbf{Abstraction function \( \alpha \)}\\[0.5em]
+    \begin{tabular}{|c|c|}
+    \hline
+    \( c \in C \) & \( \alpha(c) \in A \) \\
+    \hline
+    \( \bot \) & \( \bot \) \\
+    \( c_1 \) & \( a_1 \) \\
+    \( c_2 \) & \( a_2 \) \\
+    \( c_3 \) & \( a_4 \) \\
+    \( \top \) & \( \top \) \\
+    \hline
+    \end{tabular}
+    \end{minipage}
+    \hspace{1cm}
+    \begin{minipage}{0.45\textwidth}
+    \centering
+    \textbf{Concretization function \( \gamma \)}\\[0.5em]
+    \begin{tabular}{|c|c|}
+    \hline
+    \( a \in A \) & \( \gamma(a) \in C \) \\
+    \hline
+    \( \bot \) & \( \bot \) \\
+    \( a_1 \) & \( \ c_1 \) \\
+    \( a_2 \) & \( \ c_2 \) \\
+    \( a_3 \) & \( \ c_3 \) \\
+    \( a_4 \) & \( \top \) \\
+    \( \top \) & \( \top \) \\
+    \hline
+    \end{tabular}
+    \end{minipage}
+    \end{center}
+    
 \end{mdframed}
 
 \item 
  \emph{$\gamma ( a_1 \sqcup a_2 ) = \gamma(a_1) \sqcup \gamma(a_2)$, for all $a_1, a_2 \in A$}
  \begin{mdframed}
-    \vspace{2em}
+    
     %% TODO Comment out the correct answer.
     %\textbf{True} 
-    %\textbf{False}
+    \textbf{False}
+
+        \begin{tikzpicture}[>=Stealth, thick, node distance=1.5cm]
+
+       % Abstract lattice (left)
+        \node (topA) at (0,4.5) {$\top$};
+        \node (a3) at (0,3) {$a_3$};
+        \node (a2) at (-1,1.5) {$a_2$};
+        \node (a1) at (1,1.5) {$a_1$};
+        \node (botA) at (0,0) {$\bot$};
+        
+        \draw (topA) -- (a3);
+        \draw (a3) -- (a2);
+        \draw (a3) -- (a1);
+        \draw (a2) -- (botA);
+        \draw (a1) -- (botA);
+        
+        
+        % Concrete lattice (right)
+        \node (topC) at (5,4.5) {$\top$};
+        \node (c4) at (5,3.5) {$c_4$};
+        \node (c3) at (5,2.5) {$c_3$};
+        \node (c2) at (4.2,1.5) {$c_2$};
+        \node (c1) at (5.8,1.5) {$c_1$};
+        \node (botC) at (5,0) {$\bot$};
+        
+        \draw (topC) -- (c4) -- (c3);
+        \draw (c3) -- (c2);
+        \draw (c3) -- (c1);
+        \draw (c2) -- (botC);
+        \draw (c1) -- (botC);
+        
+
+        
+    \end{tikzpicture}
+
+    \begin{center}
+    \begin{minipage}{0.45\textwidth}
+    \centering
+    \textbf{Concretization function \( \alpha \)}\\[0.5em]
+    \begin{tabular}{|c|c|}
+    \hline
+    \( a \in A \) & \( \gamma(a) \in C \) \\
+    \hline
+    \( \bot \) & \( \bot \) \\
+    \( a_1 \) & \( c_1 \) \\
+    \( a_2 \) & \( c_2 \) \\
+    \( a_3 \) & \( c_4 \) \\
+    \( \top \) & \( \top \) \\
+    \hline
+    \end{tabular}
+    \end{minipage}
+    \hspace{1cm}
+    \begin{minipage}{0.45\textwidth}
+    \centering
+    \textbf{Abstraction function \( \gamma \)}\\[0.5em]
+    \begin{tabular}{|c|c|}
+    \hline
+    \( c \in C \) & \( \alpha(c) \in A \) \\
+    \hline
+    \( \bot \) & \( \bot \) \\
+    \( c_1 \) & \( \ a_1 \) \\
+    \( c_2 \) & \( \ a_2 \) \\
+    \( c_3 \) & \( \ a_3 \) \\
+    \( c_4 \) & \( \top \) \\
+    \( \top \) & \( \top \) \\
+    \hline
+    \end{tabular}
+    \end{minipage}
+    \end{center}
+    
 \end{mdframed}
+
+\vspace{20em}
 
 \item 
  \emph{$\gamma ( a_1 \sqcap a_2 ) = \gamma(a_1) \sqcap \gamma(a_2)$, for all $a_1, a_2 \in A$}
  \begin{mdframed}
-    \vspace{2em}
+
     %% TODO Comment out the correct answer.
     %\textbf{True} 
-    %\textbf{False}
-\end{mdframed}
+    \textbf{False}
 
+    \begin{tikzpicture}[>=Stealth, thick, node distance=1.5cm]
+
+    % Abstract lattice (left) - flipped vertically
+    \node (topA) at (0,-4.5) {$\bot$};
+    \node (a3) at (0,-3) {$a_3$};
+    \node (a2) at (-1,-1.5) {$a_2$};
+    \node (a1) at (1,-1.5) {$a_1$};
+    \node (botA) at (0,0) {$\top$};
+    
+    \draw (topA) -- (a3);
+    \draw (a3) -- (a2);
+    \draw (a3) -- (a1);
+    \draw (a2) -- (botA);
+    \draw (a1) -- (botA);
+    
+    
+    % Concrete lattice (right) - flipped vertically
+    \node (topC) at (5,-4.5) {$\bot$};
+    \node (c4) at (5,-3.5) {$c_4$};
+    \node (c3) at (5,-2.5) {$c_3$};
+    \node (c2) at (4.2,-1.5) {$c_2$};
+    \node (c1) at (5.8,-1.5) {$c_1$};
+    \node (botC) at (5,0) {$\top$};
+    
+    \draw (topC) -- (c4) -- (c3);
+    \draw (c3) -- (c2);
+    \draw (c3) -- (c1);
+    \draw (c2) -- (botC);
+    \draw (c1) -- (botC);
+
+\end{tikzpicture}
+
+        \begin{center}
+    \begin{minipage}{0.45\textwidth}
+    \centering
+    \textbf{Concretization function \( \alpha \)}\\[0.5em]
+    \begin{tabular}{|c|c|}
+    \hline
+    \( a \in A \) & \( \gamma(a) \in C \) \\
+    \hline
+    \( \bot \) & \( \bot \) \\
+    \( a_1 \) & \( c_1 \) \\
+    \( a_2 \) & \( c_2 \) \\
+    \( a_3 \) & \( c_4 \) \\
+    \( \top \) & \( \top \) \\
+    \hline
+    \end{tabular}
+    \end{minipage}
+    \hspace{1cm}
+    \begin{minipage}{0.45\textwidth}
+    \centering
+    \textbf{Abstraction function \( \gamma \)}\\[0.5em]
+    \begin{tabular}{|c|c|}
+    \hline
+    \( c \in C \) & \( \alpha(c) \in A \) \\
+    \hline
+    \( \bot \) & \( \bot \) \\
+    \( c_1 \) & \( \ a_1 \) \\
+    \( c_2 \) & \( \ a_2 \) \\
+    \( c_3 \) & \( \ a_3 \) \\
+    \( c_4 \) & \( \top \) \\
+    \( \top \) & \( \top \) \\
+    \hline
+    \end{tabular}
+    \end{minipage}
+    \end{center}
+    
+\end{mdframed}
 
 \end{enumerate}
 \newpage
@@ -207,10 +491,18 @@ If \textbf{False}, provide a counterexample in the form
 of a join-semilattice and meet-semilattice explaining why they do not satisfy 
 the above hypothesis.
 \begin{mdframed}
-  \vspace{2em}
+  
   %% TODO Comment out the correct answer.
-  %\textbf{True} 
+  \textbf{True} 
   %\textbf{False}
+
+    This statement is true and we can prove this through equivalence.
+
+    First we can show that if $x \sqsubseteq_1 y$ then $x \sqsubseteq_2 y$.
+
+
+    
+  
   \end{mdframed}
 \emph{}
 
